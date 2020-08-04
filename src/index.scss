@@ -1,9 +1,14 @@
 @import-normalize;
+@import 'helper';
 
 *{
   box-sizing: border-box;
   color: #333333;
   font-size: 14px;
+}
+
+body {
+  font-family: $font-heiti
 }
 
 html, body, div, span, applet, object, iframe,
@@ -32,7 +37,7 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 body {
-  line-height: 1;
+  line-height: 1.2;
 }
 ol, ul {
   list-style: none;
