@@ -6,9 +6,7 @@ import {
   HashRouter as Router,
   Switch,
   Route,
-  Link,
-  useLocation,
-  Redirect
+  useLocation
 } from "react-router-dom"
 
 const Wrapper = styled.div`
@@ -40,7 +38,7 @@ function App() {
               </Route>
             </Switch>
           </Main>
-          <Navigator></Navigator>
+          <Navigator />
         </Wrapper>
       </Router>
   );

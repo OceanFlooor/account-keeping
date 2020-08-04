@@ -3,12 +3,12 @@
 
 *{
   box-sizing: border-box;
-  color: #333333;
   font-size: 14px;
 }
 
 body {
-  font-family: $font-heiti
+  font-family: $font-heiti;
+  color: #333333;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -28,7 +28,6 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -50,4 +49,5 @@ a {
   -moz-user-focus: none;
   -moz-user-select: none;
   font-size: 14px;
+  font-family: inherit;
 }
