@@ -8,13 +8,12 @@ try {
 }
 
 type Props = {
-  fill: string,
   id: string
 }
 
 const Icon = (props: Props) => {
   return (
-      <svg fill={`#${props.fill}`}>
+      <svg>
         <use xlinkHref={`#${props.id}`}/>
       </svg>
   )

@@ -8,7 +8,7 @@ import Detail from "../view/Detail/Detail";
 const RouterView = ()=> {
   return (
       <Switch>
-        <Route path="/about">
+        <Route path="/">
           <Purse/>
         </Route>
         <Route path="/detail">
