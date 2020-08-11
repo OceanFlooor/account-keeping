@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import Icon from "../../../../components/Icon";
+import calcInputNumber, {getDecimal, includesOperator, separate} from "./handler/calcInputNumber";
 
 const NumberPadStyl = styled.section`
   background-color: #F2F3F5;
@@ -15,6 +16,9 @@ const NumberPadStyl = styled.section`
       display: flex;
       align-items: center;
       color: #343233;
+      > span {
+        flex-shrink: 0;
+      }
       > svg {
         width: 20px;
         height: 20px;
@@ -61,6 +65,8 @@ const NumberPadStyl = styled.section`
 
 const NumberPad = ()=> {
   const [input, setInput] = useState('')
+  const [number, setNumber] = useState('0.00')
+
   const inputChange = (e: React.ChangeEvent) => {
     const val = (e.target as HTMLInputElement).value
     if(val.length <= 20) {
@@ -69,8 +75,22 @@ const NumberPad = ()=> {
   }
 
   const numberPadHandle = (e: React.MouseEvent) => {
-    const val = (e.target as HTMLButtonElement).textContent
-    console.log(val)
+    const val = (e.target as HTMLButtonElement).textContent || ''
+
+    if('0123456789.+-'.split('').concat('删除','清空').includes(val)){
+      let separatePart
+      if(includesOperator(number).res) {
+        separatePart = separate(number)
+      } else {
+        separatePart = {left: number, right: '0.00001'}
+      }
+
+      if(getDecimal(separatePart.left).length <= 2 || getDecimal(separatePart.right).length <= 2 || ['+','-','删除','清空'].includes(val)) {
+        setNumber(calcInputNumber(number, val))
+      } else {
+        return
+      }
+    }
   }
 
   return (
@@ -80,13 +100,13 @@ const NumberPad = ()=> {
             <Icon id={`remarks`}/>
             <span>备注：</span>
             <input placeholder={`写点备注...`} onChange={inputChange} value={input}/>
-            <span className="num">0.00</span>
+            <span className="num">{number}</span>
           </div>
           <div className={`button-pad`} onClick={numberPadHandle}>
             <button>7</button>
             <button>8</button>
             <button>9</button>
-            <button>今天</button>
+            <button>清空</button>
             <button>4</button>
             <button>5</button>
             <button>6</button>
