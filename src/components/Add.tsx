@@ -45,7 +45,7 @@ const Add = () => {
       <AddStyl>
         <div className="outter" onClick={handleClick}>
           <div className='wrapper'>
-            <Icon id='add'></Icon>
+            <Icon id='add'/>
           </div>
         </div>
       </AddStyl>

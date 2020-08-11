@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {Context} from "../../../../Reducer/pageStore";
+import {IconPanelContext} from "../../../../Reducer/iconPanelStore";
 
 const HeaderStyl = styled.section`
   display: flex;
@@ -23,26 +24,27 @@ const HeaderStyl = styled.section`
   }
 `
 
-const Header = (props: any) => {
-  const [active, setActive] = useState('支出')
-  const {dispatch} = useContext(Context)
+const Header = () => {
+  const iconPanelStore = useContext(IconPanelContext)
+  const current = iconPanelStore.state.current
+  const pageStore = useContext(Context)
 
   const headerOnclick = (e: React.MouseEvent) => {
     const val = (e.target as HTMLDivElement).textContent
 
     if(val === '支出') {
-      setActive('支出')
+      iconPanelStore.dispatch({type: 'setCurrent', payload: {current: 'left'}})
     } else if(val === '收入') {
-      setActive('收入')
+      iconPanelStore.dispatch({type: 'setCurrent', payload: {current: 'right'}})
     } else {
-      dispatch({type: 'setIconShow', payload: false})
+      pageStore.dispatch({type: 'setIconShow', payload: false})
     }
   }
 
   return (
       <HeaderStyl onClick={headerOnclick}>
-        <div className={active === '支出' ? 'selected' : ''}>支出</div>
-        <div className={active === '收入' ? 'selected' : ''}>收入</div>
+        <div className={current === 'left' ? 'selected' : ''}>支出</div>
+        <div className={current === 'right' ? 'selected' : ''}>收入</div>
         <span className='cancel'>取消</span>
       </HeaderStyl>
   )

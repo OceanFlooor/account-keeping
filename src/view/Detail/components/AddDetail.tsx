@@ -3,6 +3,8 @@ import React, {useContext} from "react";
 import {Context} from "../../../Reducer/pageStore";
 import Header from "./AddDetailComponent/Header";
 import IconPanel from "./AddDetailComponent/IconPanel";
+import {IconPanelStore} from "Reducer/iconPanelStore";
+import NumberPad from "./AddDetailComponent/NumberPad";
 
 const Wrapper = styled.div`
   top: 0;
@@ -13,6 +15,8 @@ const Wrapper = styled.div`
   z-index: 0;
   background-color: #fff;
   transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
   &.hide {
     transform: translateY(100%);
   }
@@ -23,8 +27,11 @@ function AddDetail() {
 
   return (
       <Wrapper className={state.iconShow ? '' : 'hide'}>
-        <Header />
-        <IconPanel/>
+        <IconPanelStore>
+          <Header />
+          <IconPanel/>
+          <NumberPad/>
+        </IconPanelStore>
       </Wrapper>
   )
 }

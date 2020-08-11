@@ -12,7 +12,7 @@ function Detail() {
   return (
       <Wrapper>
         detail
-        <Add></Add>
+        <Add/>
         <AddDetail/>
       </Wrapper>
   )

@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import {HashRouter as Router, NavLink, Route, Switch, Redirect} from "react-router-dom";
-import React, {useContext} from "react";
+import React from "react";
 import Icon from "./Icon";
 
 import Purse from "../view/Purse/Purse";
 import Detail from "../view/Detail/Detail";
 import Users from "../view/Users/Users";
 import NotMatch from "./NotMatch";
-import {Context} from "../Reducer/pageStore";
 
 const Wrapper = styled.div`
   position: relative;
@@ -52,20 +51,21 @@ const Main = styled.div`
   flex: 1;
 `
 
+const navs = [{
+  id: 'purse',
+  path: '/purse',
+  name: '钱包'
+}, {
+  id: 'detail',
+  path: '/detail',
+  name: '明细'
+}, {
+  id: 'mine',
+  path: '/users',
+  name: '我的'
+}]
+
 function Navigator () {
-  const navs = [{
-    id: 'purse',
-    path: '/purse',
-    name: '钱包'
-  }, {
-    id: 'detail',
-    path: '/detail',
-    name: '明细'
-  }, {
-    id: 'mine',
-    path: '/users',
-    name: '我的'
-  }]
 
   return (
       <Wrapper>

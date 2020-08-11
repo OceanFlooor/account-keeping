@@ -10,7 +10,7 @@ type actionType = {
 }
 
 const store: storeType = {
-  iconShow: false
+  iconShow: true
 }
 
 const reducer = (state: storeType, action: actionType) => {
