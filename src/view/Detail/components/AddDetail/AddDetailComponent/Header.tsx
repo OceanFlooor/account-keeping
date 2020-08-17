@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, {useContext} from "react";
-import {Context} from "../../../../Reducer/pageStore";
-import {IconPanelContext} from "../../../../Reducer/iconPanelStore";
+import {Context} from "../../../../../Reducer/pageStore";
+import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
 
 const HeaderStyl = styled.section`
   display: flex;

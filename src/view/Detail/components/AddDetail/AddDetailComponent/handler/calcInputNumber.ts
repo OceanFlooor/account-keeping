@@ -1,5 +1,5 @@
 export const includesOperator = (number: string)=> {
-  const res = number.match(/[+\-]/)
+  const res = number.match(/[+-]/)
   if(!!res) {
     return {res: true, index: res.index}
   } else {
@@ -8,8 +8,14 @@ export const includesOperator = (number: string)=> {
 }
 
 export const separate = (number: string) => {
-  // @ts-ignore
-  const operator = number.match(/[+\-]/)[0]
+  const hasOperator = number.match(/[+-]/)
+  let operator
+  if(hasOperator) {
+    operator = hasOperator[0]
+  } else {
+    operator = '$'  // 如果不含运算符号，则随便指定 operator
+  }
+
   return {
     left: number.split(operator)[0],
     right: number.split(operator)[1],
@@ -110,7 +116,7 @@ const calcInputNumber = (number: string, val: string) => {
         if(includesOperator(number).index === number.length -1) {
           return number
         } else {
-          return eval(number).toFixed(3).toString() + val
+          return substitutionEval(number).toFixed(2).toString() + val
         }
       } else {
         return number + val
@@ -120,6 +126,18 @@ const calcInputNumber = (number: string, val: string) => {
     case '清空':
     default:
       return '0.00'
+  }
+}
+
+export const substitutionEval = (number: string) => {
+  const {left, right, operator} = separate(number)
+  switch (operator) {
+    case '+':
+      return Number(left) + (right ? Number(right) : 0)
+    case '-':
+      return Number(left) - (right ? Number(right) : 0)
+    default:
+      return Number(number)
   }
 }
 

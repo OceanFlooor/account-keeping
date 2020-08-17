@@ -1,14 +1,13 @@
 import React, {useReducer} from "react";
 
-type actionType = {
-    type: string,
-    payload: {
-        current: 'left' | 'right'
-    }
-}
+type Icon = {id: string, name: string}
+type actionType =
+    | {type: 'setCurrent', payload: { current: 'left' | 'right' }}
+    | {type: 'setSelectedIcon', payload: { selectedIcon: Icon }}
 
 type itemsType = {
     current: 'left' | 'right',
+    selectedIcon: Icon,
     spendItems: {
         id: string;
         name: string;
@@ -32,12 +31,14 @@ const incomeItems = [
     {id: 'stocks', name:'理财'},
 ]
 
-const items: itemsType = {current: 'left', spendItems, incomeItems}
+const items: itemsType = {current: 'left', selectedIcon: {id: '', name: ''}, spendItems, incomeItems}
 
 const reducer = (state: itemsType, action: actionType) => {
     switch (action.type) {
         case 'setCurrent':
             return {...state, current: action.payload.current}
+        case 'setSelectedIcon':
+            return {...state, selectedIcon: {...action.payload.selectedIcon}}
         default:
             throw new Error()
     }

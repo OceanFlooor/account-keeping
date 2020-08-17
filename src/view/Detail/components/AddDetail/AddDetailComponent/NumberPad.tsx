@@ -1,11 +1,17 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import styled from "styled-components";
-import Icon from "../../../../components/Icon";
-import calcInputNumber, {getDecimal, includesOperator, separate} from "./handler/calcInputNumber";
+import Icon from "../../../../../components/Icon";
+import calcInputNumber, {getDecimal, includesOperator, separate, substitutionEval} from "./handler/calcInputNumber";
+import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
+import {useDetailItems} from "../../../../../hooks/useDetailItems";
 
 const NumberPadStyl = styled.section`
   background-color: #F2F3F5;
   font-size: 14px;
+  transition: all 0.3s;
+  &.number-pad-hide{
+    transform: translateY(100%);
+  }
   .wrapper{
     border-left: 1px solid #CFCFD1;
     border-top: 1px solid #CFCFD1;
@@ -64,8 +70,10 @@ const NumberPadStyl = styled.section`
 `
 
 const NumberPad = ()=> {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('')  // 备注
   const [number, setNumber] = useState('0.00')
+  const {state} = useContext(IconPanelContext)
+  const {addItem} = useDetailItems()
 
   const inputChange = (e: React.ChangeEvent) => {
     const val = (e.target as HTMLInputElement).value
@@ -93,8 +101,15 @@ const NumberPad = ()=> {
     }
   }
 
+  const finish = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const output = substitutionEval(number).toFixed(2).toString()
+    const type = state.current === 'left' ? 'spend' : 'income'
+    addItem({id: '', iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+  }
+
   return (
-      <NumberPadStyl>
+      <NumberPadStyl className={state.selectedIcon ? '' : `number-pad-hide`}>
         <div className="wrapper">
           <div className="head">
             <Icon id={`remarks`}/>
@@ -118,7 +133,7 @@ const NumberPad = ()=> {
             <button className='bold'>.</button>
             <button>0</button>
             <button>删除</button>
-            <button className={`finish`}>完成</button>
+            <button className={`finish`} onClick={finish}>完成</button>
           </div>
         </div>
       </NumberPadStyl>
