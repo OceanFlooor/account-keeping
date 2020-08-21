@@ -4,6 +4,7 @@ import Icon from "../../../../../components/Icon";
 import calcInputNumber, {getDecimal, includesOperator, separate, substitutionEval} from "./handler/calcInputNumber";
 import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
 import {Item, useDetailItems} from "../../../../../hooks/useDetailItems";
+import {useHistory} from "react-router-dom";
 
 const NumberPadStyl = styled.section`
   background-color: #F2F3F5;
@@ -73,7 +74,8 @@ type Props = {
   item: Item | undefined
 }
 
-const NumberPad: React.FC<Props> = ({item})=> {
+const NumberPad: React.FC<Props> = ({item}) => {
+  const history = useHistory()
   const [input, setInput] = useState('')  // 备注
   const [number, setNumber] = useState('0.00')
   const {state} = useContext(IconPanelContext)
@@ -115,13 +117,20 @@ const NumberPad: React.FC<Props> = ({item})=> {
 
   const finish = (e: React.MouseEvent) => {
     e.stopPropagation()
-    const output = substitutionEval(number).toFixed(2).toString()
-    const type = state.current === 'left' ? 'spend' : 'income'
 
-    if(!item) {
-      addItem({id: '', iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+    // 选择了图标
+    if(state.selectedIcon.id && state.selectedIcon.name) {
+      const output = substitutionEval(number).toFixed(2).toString()
+      const type = state.current === 'left' ? 'spend' : 'income'
+
+      if(!item) {
+        addItem({id: '', iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+      } else {
+        updateItem({id: item.id, iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+      }
+      history.goBack()
     } else {
-      updateItem({id: item.id, iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+      alert('请选择种类')
     }
   }
 

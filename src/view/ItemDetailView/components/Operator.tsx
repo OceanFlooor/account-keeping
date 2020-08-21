@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import {Item} from "hooks/useDetailItems";
+import {Item, useDetailItems} from "hooks/useDetailItems";
 
 const baseGreyTheme = '#D9D9D9'
 
@@ -27,15 +27,22 @@ type Props = {
 
 const Operator: React.FC<Props> = (props) => {
   const history = useHistory()
+  const {deleteItem} = useDetailItems()
+
   const handleEdit = () => {
     history.push(`/edit/${props.item.id}`)
+  }
+
+  const handleDelete = () => {
+    deleteItem(props.item.id)
+    history.goBack()
   }
 
   return (
       <Wrapper theme={baseGreyTheme}>
         <div onClick={handleEdit}>编辑</div>
         <span/>
-        <div>删除</div>
+        <div onClick={handleDelete}>删除</div>
       </Wrapper>
   )
 }

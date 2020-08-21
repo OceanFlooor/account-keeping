@@ -44,16 +44,23 @@ const useDetailItems = () => {
     })
   }
 
-  const updateItem = (item: Item) => {
-    const index = items.findIndex(val => {
-      return val.id === item.id
+  const findIndex = (id: string) => {
+    return items.findIndex(val => {
+      return val.id === id
     })
+  }
 
-    items[index] = item
+  const updateItem = (item: Item) => {
+    items[findIndex(item.id)] = item
     setItems([...items])
   }
 
-  return {items, addItem, sum, findItem, updateItem}
+  const deleteItem = (id: string) => {
+    items.splice(findIndex(id), 1)
+    setItems([...items])
+  }
+
+  return {items, addItem, sum, findItem, updateItem, deleteItem}
 }
 
 export {useDetailItems}

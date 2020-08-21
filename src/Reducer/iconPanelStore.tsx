@@ -49,8 +49,7 @@ export const IconPanelContext = React.createContext<{
   dispatch: (action: actionType) => void
 }>({
   state: items,
-  dispatch: () => {
-  }
+  dispatch: () => {}
 })
 
 export const IconPanelStore = (props: any) => {
