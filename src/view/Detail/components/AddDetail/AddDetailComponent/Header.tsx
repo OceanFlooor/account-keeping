@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, {useContext} from "react";
-import {Context} from "../../../../../Reducer/pageStore";
-import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
+import {IconPanelContext} from "Reducer/iconPanelStore";
+import { useHistory } from "react-router-dom";
 
 const HeaderStyl = styled.section`
   display: flex;
@@ -27,7 +27,7 @@ const HeaderStyl = styled.section`
 const Header = () => {
   const iconPanelStore = useContext(IconPanelContext)
   const current = iconPanelStore.state.current
-  const pageStore = useContext(Context)
+  const history = useHistory()
 
   const headerOnclick = (e: React.MouseEvent) => {
     const val = (e.target as HTMLDivElement).textContent
@@ -36,8 +36,8 @@ const Header = () => {
       iconPanelStore.dispatch({type: 'setCurrent', payload: {current: 'left'}})
     } else if(val === '收入') {
       iconPanelStore.dispatch({type: 'setCurrent', payload: {current: 'right'}})
-    } else {
-      pageStore.dispatch({type: 'setIconShow', payload: false})
+    } else if(val === '取消') {
+      history.goBack()
     }
   }
 

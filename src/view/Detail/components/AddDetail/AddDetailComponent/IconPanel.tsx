@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import React, {useContext, useEffect, useState} from "react";
-import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
-import Icon from "../../../../../components/Icon";
+import React, {useContext} from "react";
+import {IconPanelContext} from "Reducer/iconPanelStore";
+import Icon from "components/Icon";
 
 const IconPanelStyl = styled.section`
   flex: 1;
@@ -60,16 +60,10 @@ type Item = {id: string, name: string}
 const IconPanel = () => {
   const {state, dispatch} = useContext(IconPanelContext)
   const current = state.current
-  const [selectedIdx, setSelectedIdx] = useState(NaN)
 
   const setSelected = (index: number, item: Item) => {
-    setSelectedIdx(index)
     dispatch({type: 'setSelectedIcon', payload: {selectedIcon: {id: item.id, name: item.name}}})
   }
-  useEffect(() => {
-    setSelectedIdx(NaN)
-    dispatch({type: 'setSelectedIcon', payload: {selectedIcon: {id: '', name: ''}}})
-  }, [current])
 
   const iconList = (items: Item[], part: 'left' | 'right') => {
     return (
@@ -79,7 +73,7 @@ const IconPanel = () => {
               items.map((item, index) => {
                 return (
                     <div className="item" key={item.id}>
-                      <div className={`icon-wrapper ${(current === part && selectedIdx === index) ? 'selected' : ''}`} onClick={() => setSelected(index, item)}>
+                      <div className={`icon-wrapper ${(current === part && item.id === state.selectedIcon.id) ? 'selected' : ''}`} onClick={() => setSelected(index, item)}>
                         <Icon id={item.id} />
                       </div>
                       <span>{item.name}</span>

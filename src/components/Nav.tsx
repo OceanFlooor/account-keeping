@@ -7,6 +7,9 @@ import Purse from "../view/Purse/Purse";
 import Detail from "../view/Detail/Detail";
 import Users from "../view/Users/Users";
 import NotMatch from "./NotMatch";
+import AddDetail from "../view/Detail/components/AddDetail/AddDetail";
+import ItemDetailView from "../view/ItemDetailView/ItemDetailView";
+import {IconPanelStore} from "../Reducer/iconPanelStore";
 
 const Wrapper = styled.div`
   position: relative;
@@ -65,6 +68,14 @@ const navs = [{
   name: '我的'
 }]
 
+const AddDetailWithContext = () => {
+  return (
+      <IconPanelStore>
+        <AddDetail/>
+      </IconPanelStore>
+  )
+}
+
 function Navigator () {
 
   return (
@@ -75,6 +86,8 @@ function Navigator () {
               <Route path="/purse" component={Purse} />
               <Route path="/detail" component={Detail} />
               <Route path="/users" component={Users} />
+              <Route path={["/edit/:id", "/edit"]} component={AddDetailWithContext} />
+              <Route path="/itemDetailView/:id" component={ItemDetailView} />
               <Redirect exact from="/" to="/detail" />
               <Route path="*">
                 <NotMatch/>

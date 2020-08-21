@@ -38,7 +38,22 @@ const useDetailItems = () => {
     return {income, spend}
   }
 
-  return {items, addItem, sum}
+  const findItem = (id: string): Promise<Item> => {
+    return new Promise((resolve) => {
+      resolve(items.filter(item => item.id === id)[0])
+    })
+  }
+
+  const updateItem = (item: Item) => {
+    const index = items.findIndex(val => {
+      return val.id === item.id
+    })
+
+    items[index] = item
+    setItems([...items])
+  }
+
+  return {items, addItem, sum, findItem, updateItem}
 }
 
 export {useDetailItems}

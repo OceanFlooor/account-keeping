@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import React, {useContext} from "react";
+import React from "react";
 import Icon from "./Icon";
-import {Context} from "../Reducer/pageStore";
-
+import { useHistory } from "react-router-dom";
 
 const AddStyl = styled.div`
   position: absolute;
@@ -33,13 +32,13 @@ const AddStyl = styled.div`
       }
     }
   }
-
 `
 
 const Add = () => {
-  const {dispatch} = useContext(Context)
+  const history = useHistory()
+
   const handleClick = (e:React.MouseEvent) => {
-    dispatch({type: 'setIconShow', payload: true})
+    history.push('/edit')
   }
   return (
       <AddStyl>

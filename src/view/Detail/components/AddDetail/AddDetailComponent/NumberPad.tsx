@@ -1,9 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styled from "styled-components";
 import Icon from "../../../../../components/Icon";
 import calcInputNumber, {getDecimal, includesOperator, separate, substitutionEval} from "./handler/calcInputNumber";
 import {IconPanelContext} from "../../../../../Reducer/iconPanelStore";
-import {useDetailItems} from "../../../../../hooks/useDetailItems";
+import {Item, useDetailItems} from "../../../../../hooks/useDetailItems";
 
 const NumberPadStyl = styled.section`
   background-color: #F2F3F5;
@@ -69,11 +69,22 @@ const NumberPadStyl = styled.section`
   }
 `
 
-const NumberPad = ()=> {
+type Props = {
+  item: Item | undefined
+}
+
+const NumberPad: React.FC<Props> = ({item})=> {
   const [input, setInput] = useState('')  // 备注
   const [number, setNumber] = useState('0.00')
   const {state} = useContext(IconPanelContext)
-  const {addItem} = useDetailItems()
+  const {addItem, updateItem} = useDetailItems()
+
+  useEffect(()=> {
+    if(item) {
+      setInput(item.remark)
+      setNumber(item.output)
+    }
+  },[item])
 
   const inputChange = (e: React.ChangeEvent) => {
     const val = (e.target as HTMLInputElement).value
@@ -82,6 +93,7 @@ const NumberPad = ()=> {
     }
   }
 
+  // 数字键盘输入控制
   const numberPadHandle = (e: React.MouseEvent) => {
     const val = (e.target as HTMLButtonElement).textContent || ''
 
@@ -105,7 +117,12 @@ const NumberPad = ()=> {
     e.stopPropagation()
     const output = substitutionEval(number).toFixed(2).toString()
     const type = state.current === 'left' ? 'spend' : 'income'
-    addItem({id: '', iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+
+    if(!item) {
+      addItem({id: '', iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+    } else {
+      updateItem({id: item.id, iconId: state.selectedIcon.id, iconName: state.selectedIcon.name, output, remark: input, type})
+    }
   }
 
   return (

@@ -30,12 +30,14 @@ const Wrapper = styled.div`
   
 `
 type Props = {
-  item: Item
+  item: Item,
+  onClick: (id: string) => void
 }
 const DetailItem: React.FunctionComponent<Props> = (props) => {
-  const {item} = props
+  const {item, onClick} = props
+
   return (
-      <Wrapper>
+      <Wrapper onClick={() => onClick(item.id)}>
         <div className="icon">
           <div className="icon-wrapper">
             <Icon id={item.iconId}/>
