@@ -1,6 +1,6 @@
 {
   "name": "account-keeping",
-  "homepage": "https://oceanflooor.github.io/account-keeping/",
+  "homepage": "https://oceanflooor.github.io/account-keeping/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
