@@ -3,7 +3,7 @@ import {HashRouter as Router, NavLink, Route, Switch, Redirect} from "react-rout
 import React from "react";
 import Icon from "./Icon";
 
-import Purse from "../view/Purse/Purse";
+import Charts from "../view/Charts/Charts";
 import Detail from "../view/Detail/Detail";
 import Users from "../view/Users/Users";
 import NotMatch from "./NotMatch";
@@ -52,12 +52,13 @@ const Nav = styled.div`
 
 const Main = styled.div`
   flex: 1;
+  overflow: hidden;
 `
 
 const navs = [{
   id: 'purse',
-  path: '/purse',
-  name: '钱包'
+  path: '/charts',
+  name: '图表'
 }, {
   id: 'detail',
   path: '/detail',
@@ -65,7 +66,7 @@ const navs = [{
 }, {
   id: 'mine',
   path: '/users',
-  name: '我的'
+  name: '关于'
 }]
 
 const AddDetailWithContext = () => {
@@ -83,7 +84,7 @@ function Navigator () {
         <Router>
           <Main>
             <Switch>
-              <Route path="/purse" component={Purse} />
+              <Route path="/charts" component={Charts} />
               <Route path="/detail" component={Detail} />
               <Route path="/users" component={Users} />
               <Route path={["/edit/:id", "/edit"]} component={AddDetailWithContext} />

@@ -1,6 +1,6 @@
 import {Route, Switch} from "react-router-dom";
 import React from "react";
-import Purse from "../view/Purse/Purse";
+import Charts from "../view/Charts/Charts";
 import Users from "../view/Users/Users";
 import NotMatch from "./NotMatch";
 import Detail from "../view/Detail/Detail";
@@ -9,7 +9,7 @@ const RouterView = ()=> {
   return (
       <Switch>
         <Route path="/">
-          <Purse/>
+          <Charts/>
         </Route>
         <Route path="/detail">
           <Detail/>
